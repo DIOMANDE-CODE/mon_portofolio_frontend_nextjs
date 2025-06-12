@@ -1,103 +1,113 @@
+import Link from "next/link";
 import Image from "next/image";
 
+import SwiperSlider from "@/components/SwiperSlider";
+
+// impoter le données
+import QuelqueProjets  from "./quelque_projet";
+// import { useState } from "react";
+
+export function BlogHeroSection() {
+  return (
+    <>
+      {/* Blog Hero Section */}
+      <section id="blog-hero" className="blog-hero section">
+        <div className="container" data-aos="fade-up" data-aos-delay="100">
+          <div className="blog-grid">
+            <article className="blog-item featured" data-aos="fade-up">
+              <Image
+                src="/assets/img/index/index_image_1.jpg"
+                alt="Blog"
+                width={5000}
+                height={5000}
+              />
+              <div className="blog-content">
+                <div className="post-meta">
+                  {/* <span className="date">Apr. 14th, 2025</span> */}
+                  <span className="category">Developpement web/mobile</span>
+                </div>
+                <h2 className="post-title">
+                  <Link
+                    href="blog-details.html"
+                    title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                  >
+                    Vous avez une idée ? Je la transforme en application web ou mobile fonctionnelle, rapide et moderne.
+                  </Link>
+                </h2>
+              </div>
+            </article>
+
+            <article
+              className="blog-item"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <Image
+                width={600}
+                height={400}
+                src="/assets/img/index/index_image_2.jpg"
+                alt="Blog Image"
+                className="img-fluid"
+              />
+              <div className="blog-content">
+                <div className="post-meta">
+                  {/* <span className="date">Apr. 14th, 2025</span> */}
+                  <span className="category">Intélligence Artificielle</span>
+                </div>
+                <h3 className="post-title">
+                  <a
+                    href="blog-details.html"
+                    title="Sed do eiusmod tempor incididunt ut labore"
+                  >
+                    L’IA pour automatiser, optimiser et faire évoluer vos projets.
+                  </a>
+                </h3>
+              </div>
+            </article>
+            {/* End Blog Item */}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Posts Section */}
+    </>
+  );
+}
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+    <>
+      <main className="main">
+        <BlogHeroSection></BlogHeroSection>
+        <section id="featured-posts" className="featured-posts section">
+          {/* Section Title */}
+          <div className="container section-title" data-aos="fade-up">
+            <h2>Nos services</h2>
+            <div>
+              <span>domaines d'interventions</span>{" "}
+              <span className="description-title"></span>
+            </div>
+          </div>
+          {/* End Section Title */}
+          <div className="container" data-aos="fade-up" data-aos-delay="100">
+            <div className="blog-posts-slider swiper init-swiper">
+              <div>
+                <SwiperSlider></SwiperSlider>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* /Featured Posts Section */}
+        <QuelqueProjets></QuelqueProjets>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      {/* Preloader */}
+      {/* Scroll Top */}
+      <Link
+        href="#"
+        id="scroll-top"
+        className="scroll-top d-flex align-items-center justify-content-center"
+      >
+        <i className="bi bi-arrow-up-short" />
+      </Link>
+    </>
   );
 }

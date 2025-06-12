@@ -1,0 +1,10 @@
+.surlignable {
+  cursor: pointer;
+  text-decoration: underline; /* Pas de soulignement par défaut */
+}
+
+.surlignable:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: orange;
+}
