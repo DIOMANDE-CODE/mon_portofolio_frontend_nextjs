@@ -5,9 +5,8 @@ import SwiperSlider from "@/components/SwiperSlider";
 
 // impoter le données
 import QuelqueProjets  from "./quelque_projet";
-// import { useState } from "react";
 
-export function BlogHeroSection() {
+export const BlogHeroSection = () => {
   return (
     <>
       {/* Blog Hero Section */}
