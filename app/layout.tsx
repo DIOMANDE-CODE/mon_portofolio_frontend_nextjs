@@ -90,10 +90,10 @@ export default function RootLayout({
           src="/assets/vendor/purecounter/purecounter_vanilla.js"
           strategy="lazyOnload"
         />
-        <Script
+        {/* <Script
           src="/assets/vendor/glightbox/js/glightbox.min.js"
           strategy="lazyOnload"
-        />
+        /> */}
         <Script src="/assets/js/main.js" strategy="lazyOnload" />
       </body>
     </html>

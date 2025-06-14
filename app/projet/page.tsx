@@ -16,7 +16,7 @@ interface Props {
   setId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const TriCategorie = ({ id, setId }: Props) => {
+const TriCategorie = ({ id, setId }: Props) => {
   interface Categorie {
     id: number;
     nom_categorie: string;
@@ -114,7 +114,7 @@ export const TriCategorie = ({ id, setId }: Props) => {
   );
 }
 
-export const ListCategorie = ({ isVisible, setIsVisible, setId }: Props) => {
+const ListCategorie = ({ isVisible, setIsVisible, setId }: Props) => {
   interface Category {
     id: number;
     nom_categorie: string;
@@ -174,7 +174,7 @@ export const ListCategorie = ({ isVisible, setIsVisible, setId }: Props) => {
     </>
   );
 }
-export const ListTravaux = () => {
+const ListTravaux = () => {
   interface Categorie {
     id: number;
     nom_categorie: string;
