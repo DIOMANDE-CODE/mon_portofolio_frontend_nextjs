@@ -1,3 +1,3 @@
-const url_image = 'http://127.0.0.1:8000'
+const url_image = process.env.NEXT_PUBLIC_API_URL
 
 export default url_image
