@@ -1,7 +1,7 @@
 import axios from "axios";
-import { getCookie } from "cookies-next"; // ou ton utilitaire perso
+// import { getCookie } from "cookies-next"; // ou ton utilitaire perso
 
-const token = getCookie('csrftoken');
+// const token = getCookie('csrftoken');
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -9,7 +9,7 @@ const api = axios.create({
   withCredentials: true, // ✅ pour envoyer les cookies (CSRF + session)
   headers: {
     "Content-Type": "application/json",
-    'X-CSRFToken': typeof token === 'string' ? token : '', // ✅ bien envoyé
+    // 'X-CSRFToken': typeof token === 'string' ? token : '', // ✅ bien envoyé
   },
 })
 
