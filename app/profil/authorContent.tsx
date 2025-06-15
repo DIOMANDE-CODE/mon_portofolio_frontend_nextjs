@@ -32,7 +32,7 @@ export default function AuthorContent() {
   return (
     <>
       {authorContent.map((info) => (
-        <div className="col-lg-8" key={info.id}>
+        <div className="col-lg-8" key="author-content">
           <div
             className="author-content"
             data-aos="fade-up"
@@ -45,7 +45,7 @@ export default function AuthorContent() {
               {
               info.biographie.split('\n')
               .map((paragraph,index) => (
-                paragraph.trim() && <p key={index}>{paragraph}</p>
+                paragraph.trim() && <p key={`${info.id}-${index}`}>{paragraph}</p>
               ))
                 }
               <div className="expertise-areas">

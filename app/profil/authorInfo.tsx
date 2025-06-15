@@ -27,7 +27,7 @@ export default function AuthorInfo() {
   const [authorInfo, setAuthorInfo] = useState<Author_Info[]>([]);
 
   useEffect(() => {
-    if (data){
+    if (data){      
       setAuthorInfo(data)
     }
   }, [data]);
@@ -37,30 +37,30 @@ export default function AuthorInfo() {
 
   return (
     <>
-      {authorInfo.map((info) => (
-        <div className="col-lg-4 mb-4 mb-lg-0" key={info.id}>
+      {authorInfo.map((author) => (
+        <div className="col-lg-4 mb-4 mb-lg-0" key="author-info">
           <div className="author-card" data-aos="fade-up">
             <div className="author-image">
               <Image
                 width={5000}
                 height={5000}
-                src={`${url_image}${info.photo_profil}`}
+                src={`${url_image}${author.photo_profil}`}
                 priority
                 alt="Author"
                 className="img-fluid rounded"
               />
             </div>
             <div className="author-info">
-              <h2>{info.nom}</h2>
-              <p className="designation">{info.fonctions}</p>
+              <h2>{author.nom}</h2>
+              <p className="designation">{author.fonctions}</p>
               <div className="author-bio">
-                <b>{info.slogan}</b>
+                <b>{author.slogan}</b>
               </div>
 
               <div className="social-links">
-                {info.lien_facebook && (
+                {author.lien_facebook && (
                   <a
-                    href={info.lien_facebook}
+                    href={author.lien_facebook}
                     className="facebook"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -69,9 +69,9 @@ export default function AuthorInfo() {
                   </a>
                 )}
 
-                {info.lien_github && (
+                {author.lien_github && (
                   <a
-                    href={info.lien_github}
+                    href={author.lien_github}
                     className="github"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -80,9 +80,9 @@ export default function AuthorInfo() {
                   </a>
                 )}
 
-                {info.lien_instagram && (
+                {author.lien_instagram && (
                   <a
-                    href={info.lien_instagram}
+                    href={author.lien_instagram}
                     className="instagram"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -91,9 +91,9 @@ export default function AuthorInfo() {
                   </a>
                 )}
 
-                {info.lien_linkedin && (
+                {author.lien_linkedin && (
                   <a
-                    href={info.lien_linkedin}
+                    href={author.lien_linkedin}
                     className="linkedin"
                     target="_blank"
                     rel="noopener noreferrer"

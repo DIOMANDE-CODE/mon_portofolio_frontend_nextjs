@@ -31,9 +31,9 @@ export default function Author() {
           <div className="author-profile-1">
             <div className="row">
               {/* Author Info */}
-              <AuthorInfo></AuthorInfo>
+              <AuthorInfo />
               {/* Author Content */}
-              <AuthorContent></AuthorContent>
+              <AuthorContent key="author-content" />
             </div>
           </div>
         </div>
