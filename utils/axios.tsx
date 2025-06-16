@@ -1,17 +1,12 @@
 import axios from "axios";
-import { getCookie } from "cookies-next"; // ou ton utilitaire perso
-
-const token = getCookie('csrftoken');
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000,
-  withCredentials: true, // ✅ pour envoyer les cookies (CSRF + session)
+  withCredentials: true, // important
   headers: {
-    "Content-Type": "application/json",
-    'X-CSRFToken': typeof token === 'string' ? token : '', // ✅ bien envoyé
+    'Content-Type': 'application/json',
   },
-})
+});
 
 // Ajout d'un intercepteur
 
