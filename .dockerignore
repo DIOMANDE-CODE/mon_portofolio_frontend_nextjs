@@ -1,7 +1,32 @@
+# --- Dépendances / sorties de build (régénérées dans l'image) ---
 node_modules
 .next
 out
 build
+coverage
+*.tsbuildinfo
+.eslintcache
+
+# --- Secrets / environnement ---
+.env
+.env.*
+.vercel
+
+# --- Git / Docker / CI ---
 .git
-.env.local
-npm-debug.log
+.gitignore
+.gitattributes
+.dockerignore
+Dockerfile
+docker-compose*.yml
+.github/
+
+# --- Docs / OS / IDE ---
+README.md
+docs/
+.vscode/
+.idea/
+.DS_Store
+*.pem
+npm-debug.log*
+yarn-error.log*

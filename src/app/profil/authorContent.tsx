@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import useFetch from "@/hook/useFetch";
+import useFetch from "@/hooks/useFetch";
 
 interface Competence {
   id: number;
@@ -45,11 +44,7 @@ function chipColor(name: string): string {
 
 export default function AuthorContent() {
   const { data, error, loading } = useFetch("users/list/");
-  const [contents, setContents] = useState<AuthorContent[]>([]);
-
-  useEffect(() => {
-    if (data) setContents(data as AuthorContent[]);
-  }, [data]);
+  const contents = (data as AuthorContent[] | null) ?? [];
 
   if (loading)
     return (
@@ -86,7 +81,7 @@ export default function AuthorContent() {
               <div>
                 <h3 className="profil-card-title">Biographie</h3>
                 <div className="profil-bio-text">
-                  {info.biographie
+                  {(info.biographie ?? "")
                     .split("\n")
                     .filter((p) => p.trim())
                     .map((p, i) => (

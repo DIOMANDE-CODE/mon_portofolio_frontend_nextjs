@@ -1,4 +1,4 @@
-import api from "@/utils/axios";
+import api from "@/services/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -11,8 +11,9 @@ export default function useFetch(url: string) {
   const [error,   setError]   = useState<unknown>(null);
 
   useEffect(() => {
-    /* Données déjà en cache → rendu instantané */
+    /* Données déjà en cache → rendu instantané (resynchro à chaque changement d'url) */
     if (cache.has(url)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- resynchro depuis le cache mémoire
       setData(cache.get(url)!);
       setLoading(false);
       return;

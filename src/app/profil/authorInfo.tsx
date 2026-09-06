@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import useFetch from "@/hook/useFetch";
+import useFetch from "@/hooks/useFetch";
+import { mediaUrl } from "@/lib/media";
 
 interface AuthorInfo {
   id: number;
@@ -22,11 +22,7 @@ interface AuthorInfo {
 
 export default function AuthorInfo() {
   const { data, error, loading } = useFetch("users/list/");
-  const [authors, setAuthors] = useState<AuthorInfo[]>([]);
-
-  useEffect(() => {
-    if (data) setAuthors(data as AuthorInfo[]);
-  }, [data]);
+  const authors = (data as AuthorInfo[] | null) ?? [];
 
   if (loading)
     return (
@@ -82,7 +78,7 @@ export default function AuthorInfo() {
                   <span className="profil-contact-icon">
                     <i className="bi bi-whatsapp" />
                   </span>
-                  <span>+225 05 95 03 16 94</span>
+                  <span>+225 07 11 39 95 67</span>
                 </div>
                 {/* {author.lien_linkedin && (
                   <div className="profil-contact-item">
@@ -170,7 +166,7 @@ export default function AuthorInfo() {
               <Image
                 width={400}
                 height={540}
-                src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${author.photo_profil}`}
+                src={mediaUrl(author.photo_profil)}
                 alt={author.nom}
                 priority
                 style={{

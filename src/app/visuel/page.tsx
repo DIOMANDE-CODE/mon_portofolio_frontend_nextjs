@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination, Navigation, Autoplay, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-import useFetch from "@/hook/useFetch";
-import { formatDateFR } from "@/utils/dateUtils";
+import useFetch from "@/hooks/useFetch";
+import { formatDateFR } from "@/lib/dateUtils";
+import { mediaUrl } from "@/lib/media";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -20,8 +21,6 @@ interface Crea {
   image_visuel: string;
   date_creation: string;
 }
-
-const CLOUDINARY = process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL ?? "";
 
 /* ── Image avec skeleton shimmer ── */
 function LazyImg({
@@ -49,26 +48,23 @@ function LazyImg({
 
 export default function Visuel() {
   const { data, error, loading } = useFetch("projet/visuel/list/");
-  const [visuels,    setVisuels]    = useState<Crea[]>([]);
+  const visuels = (data as Crea[] | null) ?? [];
   const [selected,   setSelected]   = useState<Crea | null>(null);
   const [activeIdx,  setActiveIdx]  = useState(0);
   const [modalReady, setModalReady] = useState(false);
 
-  useEffect(() => {
-    if (data) setVisuels(data as Crea[]);
-  }, [data]);
-
   /* Réinitialise le loader à chaque changement d'image dans la modale */
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset du loader au changement d'image
     if (selected) setModalReady(false);
-  }, [selected?.id]);
+  }, [selected]);
 
-  const closeModal = useCallback(() => setSelected(null), []);
+  const closeModal = () => setSelected(null);
   useEffect(() => {
-    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") closeModal(); };
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") setSelected(null); };
     document.addEventListener("keydown", fn);
     return () => document.removeEventListener("keydown", fn);
-  }, [closeModal]);
+  }, []);
 
   if (loading)
     return (
@@ -150,7 +146,7 @@ export default function Visuel() {
                   <div className="visuel-card" onClick={() => setSelected(crea)}>
                     <div className="visuel-card-img">
                       <LazyImg
-                        src={`${CLOUDINARY}${crea.image_visuel}`}
+                        src={mediaUrl(crea.image_visuel)}
                         alt={crea.titre_visuel}
                         width={700}
                         height={480}
@@ -201,7 +197,7 @@ export default function Visuel() {
                 >
                   <div className="visuel-grid-img">
                     <LazyImg
-                      src={`${CLOUDINARY}${crea.image_visuel}`}
+                      src={mediaUrl(crea.image_visuel)}
                       alt={crea.titre_visuel}
                       width={500}
                       height={380}
@@ -254,7 +250,7 @@ export default function Visuel() {
               )}
               <Image
                 key={selected.id}
-                src={`${CLOUDINARY}${selected.image_visuel}`}
+                src={mediaUrl(selected.image_visuel)}
                 alt={selected.titre_visuel}
                 width={1600}
                 height={1100}

@@ -17,8 +17,6 @@ const NAV_LINKS = [
 ];
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer id="footer" role="contentinfo">
       <div className="container">
@@ -38,9 +36,9 @@ export default function Footer() {
               </li>
               <li>
                 <i className="bi bi-whatsapp footer-icon" aria-hidden="true" />
-                <a href="https://wa.me/2250595031694" target="_blank"
+                <a href="https://wa.me/2250711399567" target="_blank"
                   rel="noopener noreferrer" className="footer-contact-link">
-                  +225 05 95 03 16 94
+                  +225 07 11 39 95 67
                 </a>
               </li>
               <li>
@@ -97,7 +95,7 @@ export default function Footer() {
           <a href="mailto:diomandedrohmartial01@gmail.com" className="footer-social-btn" title="Email" aria-label="Email">
             <i className="bi bi-envelope-fill" />
           </a>
-          <a href="https://wa.me/2250595031694" target="_blank" rel="noreferrer" className="footer-social-btn" title="WhatsApp" aria-label="WhatsApp">
+          <a href="https://wa.me/2250711399567" target="_blank" rel="noreferrer" className="footer-social-btn" title="WhatsApp" aria-label="WhatsApp">
             <i className="bi bi-whatsapp" />
           </a>
         </div>

@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { use } from "react";
 import { notFound } from "next/navigation";
-import { formatPeriodeFR, formatDateFR } from "@/utils/dateUtils";
+import { formatPeriodeFR, formatDateFR } from "@/lib/dateUtils";
+import { mediaUrl } from "@/lib/media";
 
 type Tech = { id: number; nom_technologie: string };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://diomande-droh-martial.vercel.app";
-const CLOUD_URL = process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL || "https://res.cloudinary.com/darkqhocp/";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://diomandedroh.vercel.app";
 
 async function getProjet(id: string) {
+  // revalidate : dédoublonne l'appel entre generateMetadata et le rendu,
+  // et laisse le cache backend faire le reste.
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}projet/detail/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 300 },
   });
   if (!res.ok) notFound();
   return res.json();
@@ -28,7 +29,7 @@ export async function generateMetadata(
     const title = detail.titre_projet as string;
     const rawDesc = (detail.description_projet as string) ?? "";
     const description = rawDesc.replace(/\n+/g, " ").substring(0, 160);
-    const imageUrl = `${CLOUD_URL}${detail.image_projet}`;
+    const imageUrl = mediaUrl(detail.image_projet);
     const categories: { nom_categorie: string }[] = Array.isArray(detail.categorie_projet)
       ? detail.categorie_projet
       : [detail.categorie_projet];
@@ -83,9 +84,9 @@ export async function generateMetadata(
   }
 }
 
-export default function DetailProjet(props: { params: Promise<{ id: string }> }) {
-  const { id } = use(props.params);
-  const detail = use(getProjet(id));
+export default async function DetailProjet(props: { params: Promise<{ id: string }> }) {
+  const { id } = await props.params;
+  const detail = await getProjet(id);
 
   const categories = Array.isArray(detail.categorie_projet) ? detail.categorie_projet : [detail.categorie_projet];
   const proprietaires = Array.isArray(detail.proprietaire) ? detail.proprietaire : [detail.proprietaire];
@@ -95,9 +96,9 @@ export default function DetailProjet(props: { params: Promise<{ id: string }> })
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "name": detail.titre_projet,
-    "description": (detail.description_projet as string)?.replace(/\n+/g, " ").substring(0, 300),
+    "description": ((detail.description_projet as string) ?? "").replace(/\n+/g, " ").substring(0, 300),
     "url": `${SITE_URL}/projet/${id}`,
-    "image": `${CLOUD_URL}${detail.image_projet}`,
+    "image": mediaUrl(detail.image_projet),
     "dateCreated": detail.date_creation,
     "author": {
       "@type": "Person",
@@ -145,7 +146,7 @@ export default function DetailProjet(props: { params: Promise<{ id: string }> })
               <Image
                 width={1200}
                 height={600}
-                src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${detail.image_projet}`}
+                src={mediaUrl(detail.image_projet)}
                 alt={detail.titre_projet}
                 priority
               />
@@ -177,7 +178,7 @@ export default function DetailProjet(props: { params: Promise<{ id: string }> })
                     <Image
                       width={44}
                       height={44}
-                      src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${p.photo_profil}`}
+                      src={mediaUrl(p.photo_profil)}
                       alt={p.nom}
                       className="detail-author-img"
                     />
@@ -197,7 +198,7 @@ export default function DetailProjet(props: { params: Promise<{ id: string }> })
 
               {/* Description */}
               <div className="detail-content">
-                {detail.description_projet
+                {((detail.description_projet as string) ?? "")
                   .split("\n")
                   .map((para: string, i: number) =>
                     para.trim() ? <p key={i}>{para}</p> : null

@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useMemo } from "react";
-import useFetch from "@/hook/useFetch";
-import { formatPeriodeFR } from "@/utils/dateUtils";
+import { useMemo, useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import { formatPeriodeFR } from "@/lib/dateUtils";
+import { mediaUrl } from "@/lib/media";
 
 interface Categorie    { id: number; nom_categorie: string; }
 interface Proprietaire { id: number; nom: string; photo_profil: string; }
@@ -39,7 +40,7 @@ function ProjetCard({ projet, delay = 0 }: { projet: Projet; delay?: number }) {
         <Image
           width={600}
           height={340}
-          src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${projet.image_projet}`}
+          src={mediaUrl(projet.image_projet)}
           alt={projet.titre_projet}
           loading="lazy"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -72,7 +73,7 @@ function ProjetCard({ projet, delay = 0 }: { projet: Projet; delay?: number }) {
             <Image
               width={34}
               height={34}
-              src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${owner.photo_profil}`}
+              src={mediaUrl(owner.photo_profil)}
               alt={owner.nom}
               className="owner-avatar"
             />
@@ -93,14 +94,13 @@ function ProjetCard({ projet, delay = 0 }: { projet: Projet; delay?: number }) {
 /* ── Grille de projets ── */
 function ProjetGrid({ url }: { url: string }) {
   const { data, loading, error } = useFetch(url);
-  const [projets, setProjets] = useState<Projet[]>([]);
 
-  useEffect(() => { if (data) setProjets(data as Projet[]); }, [data]);
-
-  const sorted = useMemo(
-    () => [...projets].sort((a, b) => new Date(b.date_debut).getTime() - new Date(a.date_debut).getTime()),
-    [projets]
-  );
+  const sorted = useMemo(() => {
+    const projets = (data as Projet[] | null) ?? [];
+    return [...projets].sort(
+      (a, b) => new Date(b.date_debut).getTime() - new Date(a.date_debut).getTime()
+    );
+  }, [data]);
 
   if (loading)
     return (
@@ -144,15 +144,10 @@ function CategoriesFilterBar({
   activeName: string;
   onSelect: (id: number | null, name: string) => void;
 }) {
-  const { data, loading } = useFetch("projet/categorie/list");
-  const [cats, setCats] = useState<Category[]>([]);
-
-  useEffect(() => {
-    if (data) {
-      const all = data as Category[];
-      setCats(all.filter((c) => !HIDDEN_CATEGORIES.includes(c.nom_categorie.toLowerCase())));
-    }
-  }, [data]);
+  const { data, loading } = useFetch("projet/categorie/list/");
+  const cats = ((data as Category[] | null) ?? []).filter(
+    (c) => !HIDDEN_CATEGORIES.includes(c.nom_categorie.toLowerCase())
+  );
 
   const total = cats.reduce((sum, c) => sum + c.nombre_projets, 0);
 

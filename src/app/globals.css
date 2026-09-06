@@ -4554,3 +4554,51 @@ section { padding: 5rem 0; }
 * { max-width: 100%; }
 img { max-width: 100%; height: auto; }
 .container { padding-left: clamp(0.75rem, 3vw, 1.5rem); padding-right: clamp(0.75rem, 3vw, 1.5rem); }
+
+/* ==============================================================
+   Animations d'entrée (data-aos) — 100 % CSS, remplace AOS.
+   Aucun JavaScript ne touche le DOM : impossible de provoquer un
+   mismatch d'hydratation React. Les attributs data-aos* du JSX ne
+   servent plus que de sélecteurs. L'animation se joue au rendu de
+   l'élément (fill-mode both : l'état initial est tenu pendant le délai).
+   ============================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  [data-aos] {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: both;
+  }
+  [data-aos="fade-up"]    { animation-name: aos-fade-up; }
+  [data-aos="fade-down"]  { animation-name: aos-fade-down; }
+  [data-aos="fade-left"]  { animation-name: aos-fade-left; }
+  [data-aos="fade-right"] { animation-name: aos-fade-right; }
+  [data-aos="zoom-in"]    { animation-name: aos-zoom-in; }
+
+  /* Petit décalage optionnel selon data-aos-delay (valeurs utilisées). */
+  [data-aos][data-aos-delay="80"]  { animation-delay: 0.08s; }
+  [data-aos][data-aos-delay="100"] { animation-delay: 0.1s; }
+  [data-aos][data-aos-delay="150"] { animation-delay: 0.15s; }
+  [data-aos][data-aos-delay="200"] { animation-delay: 0.2s; }
+  [data-aos][data-aos-delay="300"] { animation-delay: 0.3s; }
+}
+
+@keyframes aos-fade-up {
+  from { opacity: 0; transform: translate3d(0, 40px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aos-fade-down {
+  from { opacity: 0; transform: translate3d(0, -40px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aos-fade-left {
+  from { opacity: 0; transform: translate3d(40px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aos-fade-right {
+  from { opacity: 0; transform: translate3d(-40px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aos-zoom-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}

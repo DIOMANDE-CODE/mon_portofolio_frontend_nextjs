@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import api from "@/utils/axios"; // axios instance personnalisée
+import api from "@/services/api"; // axios instance personnalisée
 import axios from "axios";
 
 export default function useMutation() {

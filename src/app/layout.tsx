@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 
-import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
-import "@/public/assets/vendor/aos/aos.css";
-import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
-import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
-import "@/public/assets/vendor/bootstrap/css/bootstrap.min.css";
-import "../public/assets/css/main.css";
+import "../../public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
+import "../../public/assets/vendor/bootstrap/css/bootstrap.min.css";
+import "../../public/assets/css/main.css";
 import "./globals.css";
+// Swiper : CSS chargé par ses composants (swiper/css).
 
 import { Roboto, Poppins, Caveat } from "next/font/google";
 
-import Script from "next/script";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import AOSProvider from "@/components/AOSProvider";
 import FloatingContact from "@/components/FloatingContact";
 import MouseEffects from "@/components/MouseEffects";
 import PreloaderWrapper from "@/components/PreloaderWrapper";
@@ -210,10 +206,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={`${roboto.variable} ${poppins.variable} ${caveat.variable}`}>
         <PreloaderWrapper>
-          <AOSProvider>
-            <Header />
-            {children}
-          </AOSProvider>
+          <Header />
+          {children}
           <Footer />
         </PreloaderWrapper>
 
@@ -224,11 +218,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         <SpeedInsights />
         <Analytics />
-
-        <Script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" strategy="beforeInteractive" />
-        <Script src="/assets/vendor/aos/aos.js" strategy="lazyOnload" />
-        <Script src="/assets/vendor/swiper/swiper-bundle.min.js" strategy="lazyOnload" />
-        <Script src="/assets/js/main.js" strategy="lazyOnload" />
+        {/* Animations "au défilement" (data-aos) : 100 % CSS (@keyframes dans
+            globals.css). Aucun JS ne touche le DOM → impossible de créer un
+            mismatch d'hydratation. Scripts vendor (main.js, aos, swiper,
+            bootstrap) retirés ; Swiper via swiper/react. */}
       </body>
     </html>
   );

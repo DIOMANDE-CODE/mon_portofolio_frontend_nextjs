@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import api from "@/utils/axios";
+import api from "@/services/api";
+import { mediaUrl } from "@/lib/media";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -62,7 +63,7 @@ export default function SwiperSlider() {
               <Image
                 width={600}
                 height={340}
-                src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${cat.image_categorie}`}
+                src={mediaUrl(cat.image_categorie)}
                 alt={cat.nom_categorie}
                 loading="lazy"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

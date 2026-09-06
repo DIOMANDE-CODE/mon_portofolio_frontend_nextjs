@@ -26,7 +26,10 @@ export default function Header() {
   }, []);
 
   /* Fermer le menu mobile à chaque changement de route */
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset volontaire au changement de route
+    setMobileOpen(false);
+  }, [pathname]);
 
   /* Fermer le menu mobile avec Escape */
   const onKeyDown = useCallback((e: KeyboardEvent) => {

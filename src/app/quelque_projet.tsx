@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import useFetch from "@/hook/useFetch";
+import useFetch from "@/hooks/useFetch";
+import { mediaUrl } from "@/lib/media";
 
 interface Categorie {
   id: number;
@@ -19,12 +19,8 @@ interface Projet {
 }
 
 export default function QuelqueProjets() {
-  const [projets, setProjets] = useState<Projet[]>([]);
   const { data, loading, error } = useFetch("projet/list/");
-
-  useEffect(() => {
-    if (data) setProjets(data as Projet[]);
-  }, [data]);
+  const projets = (data as Projet[] | null) ?? [];
 
   if (loading)
     return (
@@ -77,7 +73,7 @@ export default function QuelqueProjets() {
                   <Image
                     width={600}
                     height={400}
-                    src={`${process.env.NEXT_PUBLIC_CLOUDINARY_BASE_URL}${post.image_projet}`}
+                    src={mediaUrl(post.image_projet)}
                     alt={post.titre_projet}
                     loading="lazy"
                   />
